@@ -8,11 +8,12 @@ import java.util.Scanner;
 public class Puzzle_Game {
     public static void main(String[] args) throws Exception {
         Scanner sc = new Scanner(System.in);
-        int[][] grid = new int[3][3];
+        int[][] grid = new int[9][9];
+
         ArrayList<Integer> numbers = new ArrayList<>();
 
         // 0~8까지 리스트에 추가
-        for (int i = 0; i < 9; i++) {
+        for (int i = 0; i < 81; i++) {
             numbers.add(i);
         }
 
@@ -23,8 +24,8 @@ public class Puzzle_Game {
         int index = 0;
 
         // 셔플된 값을 3x3 배열에 채우기
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
                 grid[i][j] = numbers.get(index++);
                 if (grid[i][j] == 0) { // 0의 위치 저장
                     zeroX = i;
@@ -49,9 +50,9 @@ public class Puzzle_Game {
             // 이동 방향에 따라 스왑
             int newX = zeroX, newY = zeroY;
             if (move == 'w' && zeroX > 0) newX--; // 위로 이동
-            if (move == 's' && zeroX < 2) newX++; // 아래로 이동
+            if (move == 's' && zeroX < 8) newX++; // 아래로 이동
             if (move == 'a' && zeroY > 0) newY--; // 왼쪽 이동
-            if (move == 'd' && zeroY < 2) newY++; // 오른쪽 이동
+            if (move == 'd' && zeroY < 8) newY++; // 오른쪽 이동
 
             // 위치가 변했으면 스왑
             if (newX != zeroX || newY != zeroY) {
@@ -64,15 +65,28 @@ public class Puzzle_Game {
     
 
         // 2차원 배열 출력
-        System.out.println("랜덤 3x3 배열:");
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
+        System.out.println("랜덤 9x9 배열:");
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
                 System.out.print(grid[i][j] + " ");
             }
             System.out.println();
         }
 
         sc.close();
+    }
+
+    //InvCount에서 사용할 그리드 값을 1차원 배열로 줄 변수에 저장한후 반환
+    public static int[] getGrid = new int[81];
+    public static int[] getGrid(int[][] grid){
+
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                getGrid[i+j] = grid[i][j];
+            }
+        }
+        return getGrid;
+
     }
 
     
